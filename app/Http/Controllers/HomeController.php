@@ -3,11 +3,14 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Auth;
 
 class HomeController extends Controller
 {
     /**
      * Create a new controller instance.
+     *
+     * @author Sandeep Sugathan <sandeepsugathan@gmail.com>
      *
      * @return void
      */

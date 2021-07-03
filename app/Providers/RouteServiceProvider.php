@@ -23,9 +23,16 @@ class RouteServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
-
         parent::boot();
+
+        Route::bind('user', function($value) {
+            return \App\Models\User::find($value) ?? abort(
+                redirect()->route('users.index')->with('alertMessage', [
+                    'class' => 'warning',
+                    'message' => 'User not found',
+                ])
+            );
+        });
     }
 
     /**

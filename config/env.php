@@ -5,5 +5,6 @@ return [
     'user' => [
         'admin' => 'yes',
         'normal' => 'no'
-    ]
+    ],
+    'items_per_page' => 30
 ];

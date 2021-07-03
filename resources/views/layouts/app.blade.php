@@ -8,17 +8,22 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>{{ isset($pagetitle) ? $pagetitle.":" : null }}{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js"></script>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet" type="text/css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
     <!-- Styles -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet"/>
+    <link href="{{ asset('css/custom.css') }}" rel="stylesheet"/>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
 </head>
 <body>
     <div id="app">
@@ -34,7 +39,9 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
-
+                        @if(Auth::user() && Auth::user()->isAdmin())
+                        <li class="nav-item"><a class="nav-link" href="{{ route('users.index') }}">Users</a></li>
+                        @endif
                     </ul>
 
                     <!-- Right Side Of Navbar -->
@@ -43,9 +50,6 @@
                         @guest
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
                             </li>
                         @else
                             <li class="nav-item dropdown">
@@ -72,8 +76,15 @@
         </nav>
 
         <main class="py-4">
+            @if (isset($alertMessage) || $alertMessage = session('alertMessage'))
+            <div class="alert alert-dismissible alert-{{ $alertMessage['class'] }}" role="alert">
+                {!! nl2br($alertMessage['message']) !!}
+                <button type="button" class="close close_alert" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+            </div>
+            @endif
             @yield('content')
         </main>
     </div>
+    @yield('myscript')
 </body>
 </html>

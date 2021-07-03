@@ -7,10 +7,12 @@ class DatabaseSeeder extends Seeder
     /**
      * Seed the application's database.
      *
+     * @author Sandeep Sugathan <sandeepsugathan@gmail.com>
+     *
      * @return void
      */
     public function run()
     {
-        // $this->call(UsersTableSeeder::class);
+        $this->call(CreateDefaultAdminUser::class);
     }
 }
